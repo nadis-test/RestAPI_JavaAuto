@@ -51,7 +51,8 @@ public class HomeworkTests {
             System.out.println("Redirect address (location): " + url);
 
             redirects_number++;
-
         }
+
+        System.out.println("Final redirects number: " + (redirects_number-1));
     }
 }
