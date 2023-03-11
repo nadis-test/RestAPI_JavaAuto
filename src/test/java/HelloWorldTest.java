@@ -10,25 +10,49 @@ import java.util.Map;
 public class HelloWorldTest {
     @Test
     public void testRestAssured(){
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Header1","Value1");
-        headers.put("Header2","Value2");
+        Map<String, String> data = new HashMap<>();
+        data.put("login","secret_login");
+        data.put("password","secret_pass");
 
-        Response response = RestAssured
+        Response responseForGet = RestAssured
                 .given()
-                .redirects()
-                .follow(false)
-                .headers(headers)
+                .body(data)
                 .when()
-                .get("https://playground.learnqa.ru/api/get_303")
+                .post("https://playground.learnqa.ru/api/get_auth_cookie")
                 .andReturn();
 
-        response.prettyPrint();
+        System.out.println("\nPretty text:");
+        responseForGet.prettyPrint();
 
-        Headers responseHeaders = response.getHeaders();
+        System.out.println("\nHeaders:");
+        Headers responseHeaders = responseForGet.getHeaders();
         System.out.println(responseHeaders);
-        String locationHeader = response.getHeader("location");
-        System.out.println("Location header = " + locationHeader);
+
+        System.out.println("\nCookies:");
+        Map<String, String> responseCookies = responseForGet.getCookies();
+        System.out.println(responseCookies);
+
+        System.out.println("\nresponseAuthCookie:");
+        String responseAuthCookie = responseForGet.getCookie("auth_cookie"); // сохранили cookie для передачи дальше
+        System.out.println(responseAuthCookie);
+
+        Map<String, String> cookies = new HashMap<>();
+        if (responseAuthCookie != null) {
+            cookies.put("auth_cookie", responseAuthCookie);
+        }
+
+        //передаем авторизац данные и cookie в следующий запрос
+        Response responseForCheck = RestAssured
+                .given()
+                .body(data)
+                .cookies(cookies)
+                .when()
+                .post("https://playground.learnqa.ru/api/check_auth_cookie")
+                .andReturn();
+
+        System.out.println("\nREsponse For Check:");
+        responseForCheck.print();
+
     }
 
 }
