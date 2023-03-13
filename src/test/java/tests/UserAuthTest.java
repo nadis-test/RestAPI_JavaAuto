@@ -1,7 +1,6 @@
 package tests;
 
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lib.BaseTestcase;
@@ -12,8 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import lib.Assertions;
 
 public class UserAuthTest extends BaseTestcase {
 
@@ -54,13 +52,11 @@ public class UserAuthTest extends BaseTestcase {
                 .get("https://playground.learnqa.ru/api/user/auth")
                 .andReturn();
 
-        //получаем user_id из второго запроса для сравнения с тем, что получили при авторизации
-        int userIdOnCheck = responseCheckAuth.jsonPath().getInt("user_id");
-
-        //проверям, что id непустой
-        assertTrue(userIdOnCheck > 0, "'user_id' is unexpected");
         //сравниваем id при проверке и при авторизации, если они равны - то юзер авторизован
-        assertEquals(this.userIdOnAuth, userIdOnCheck, "'user_id' on check doesn't match with 'user_id' on auth");
+        //используя наш собственный класс Assertions
+        //в метод assertJsonByName передаем наш ответ, название поля "user_id" и эталонное значение user_id, которое мы получили от метода авторизации
+        //метод внутри из ответа вытасткивает значение "user_id" и производит сравнение с эатлонным
+        Assertions.assertJsonByName(responseCheckAuth, "user_id", this.userIdOnAuth);
     }
 
     @ParameterizedTest
@@ -86,12 +82,12 @@ public class UserAuthTest extends BaseTestcase {
         }
 
         // делаем запрос со сконструированными параметрами и получаем его ответ в виде JsonPath
-        JsonPath responseForCheck = spec.get().jsonPath();
+        Response responseForCheck = spec.get().andReturn();
 
         //проверяем значение user_id - т.к. наш тест негативный и мы намеренно  передавали в запрос только куку ИЛИ только хэдер
         // то юзер не должен быть авторизован (условие авторизации = И хэдер, И кука переданы)
         // неавторизованный юзер имеер user_id = 0 по требованиям в нашем API
-        assertEquals(0, responseForCheck.getInt("user_id"), "'user_id' should be 0 for unauth user");
+        Assertions.assertJsonByName(responseForCheck, "user_id", 0);
     }
 
 

@@ -24,10 +24,11 @@ public class BaseTestcase {
         return cookies.get(name);
     }
 
-    protected int getIntFromJson(Response response, String name){
+    protected static int getIntFromJson(Response response, String name){
         //проверяем, что в json ответе есть 'name'
         //ищем ключ 'name' в json, знак "$" означает, что ищем в корне json, а не во вложенных ветках
         response.then().assertThat().body("$", hasKey(name));
+        //вытаскием значение для 'name'
         return response.jsonPath().getInt(name);
     }
 }
