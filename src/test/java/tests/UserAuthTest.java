@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
-import lib.Assertions;
+import lib.AssertionsCustom;
 
 public class UserAuthTest extends BaseTestcase {
 
@@ -56,7 +56,7 @@ public class UserAuthTest extends BaseTestcase {
         //используя наш собственный класс Assertions
         //в метод assertJsonByName передаем наш ответ, название поля "user_id" и эталонное значение user_id, которое мы получили от метода авторизации
         //метод внутри из ответа вытасткивает значение "user_id" и производит сравнение с эатлонным
-        Assertions.assertJsonByName(responseCheckAuth, "user_id", this.userIdOnAuth);
+        AssertionsCustom.assertJsonByName(responseCheckAuth, "user_id", this.userIdOnAuth);
     }
 
     @ParameterizedTest
@@ -87,7 +87,7 @@ public class UserAuthTest extends BaseTestcase {
         //проверяем значение user_id - т.к. наш тест негативный и мы намеренно  передавали в запрос только куку ИЛИ только хэдер
         // то юзер не должен быть авторизован (условие авторизации = И хэдер, И кука переданы)
         // неавторизованный юзер имеер user_id = 0 по требованиям в нашем API
-        Assertions.assertJsonByName(responseForCheck, "user_id", 0);
+        AssertionsCustom.assertJsonByName(responseForCheck, "user_id", 0);
     }
 
 
