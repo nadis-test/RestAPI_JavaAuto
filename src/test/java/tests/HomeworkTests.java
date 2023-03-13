@@ -1,9 +1,11 @@
 package tests;
 
 import io.restassured.RestAssured;
+import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.FilterableRequestSpecification;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -14,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -240,7 +243,21 @@ public class HomeworkTests {
             //но это же сработает только один проход в цикле
             assertEquals(0, cookie_name , "cookie name: " + cookie_name + " and cookie value: " + cookie_value);
         }
+    }
 
+    @Test
+    public void checkResponseHeaders(){
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_header")
+                .andReturn();
+        //получаем хэдеры
+        Headers headers = response.getHeaders();
+        //проверяем, что в ответе есть хоть какие-то хэдеры
+        assertTrue(headers.exist(), "There is no headers");
+        //создаем итератор, чтобы обойти все хэдеры и получить их значения
+        //печатаем название и значение хэдеров при помощи заведомо фейлящегося ассерта
+        assertEquals(0, headers, "\nheaders content:\n" + headers);
+        }
     }
 }
 
