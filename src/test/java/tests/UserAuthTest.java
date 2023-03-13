@@ -1,21 +1,21 @@
+package tests;
+
 import io.restassured.RestAssured;
-import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import lib.BaseTestcase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserAuthTest {
+public class UserAuthTest extends BaseTestcase {
 
     String cookie;
     String header;
@@ -35,9 +35,9 @@ public class UserAuthTest {
                 .post("https://playground.learnqa.ru/api/user/login")
                 .andReturn();
 
-        this.cookie = responseGetAuth.getCookie("auth_sid");
-        this.header = responseGetAuth.getHeader("x-csrf-token");
-        this.userIdOnAuth = responseGetAuth.jsonPath().getInt("user_id");
+        this.cookie = this.getCookie(responseGetAuth, "auth_sid"); // вызываем getCookie из lib/BaseTestcase
+        this.header = this.getHeader(responseGetAuth,"x-csrf-token"); // вызываем getHeader из lib/BaseTestcase
+        this.userIdOnAuth = this.getIntFromJson(responseGetAuth, "user_id"); // вызываем getIntFromJson из lib/BaseTestcase
 
     }
     @Test
