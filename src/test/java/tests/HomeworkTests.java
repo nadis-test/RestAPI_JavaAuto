@@ -15,8 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HomeworkTests {
 
@@ -211,6 +210,36 @@ public class HomeworkTests {
     @ValueSource (strings = {"1234567890123456", "123456789012345", "1234567890", ""})
     public void testShortString(String string){
         assertTrue(string.length() > 15, "String length is equal or less than 15 symbols");
+
+    }
+
+    @Test
+    public void checkResponseCookie(){
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .andReturn();
+
+        //создаем хранилище всех потенциальных кук в response
+        Map<String, String> cookies = new HashMap<>();
+        //получаем куки в наше хранилище
+        cookies = response.getCookies();
+
+        //получаем все куки без значений
+        Set<String> cookie_names = cookies.keySet();
+        //проверяем, что в ответе есть хоть какие-то куки
+        assertFalse(cookie_names.isEmpty(), "There is no cookies");
+
+        //создаем итератор, чтобы обойти все куки и получить их значения
+        Iterator itr = cookie_names.iterator();
+
+        while (itr.hasNext()){
+            String cookie_name = itr.next().toString();
+            String cookie_value = cookies.get(cookie_name);
+
+            //печатаем название и значение кук при помощи заведомо фейлящегося ассерта
+            //но это же сработает только один проход в цикле
+            assertEquals(0, cookie_name , "cookie name: " + cookie_name + " and cookie value: " + cookie_value);
+        }
 
     }
 }
