@@ -5,6 +5,8 @@ import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomeworkTests {
 
@@ -200,6 +205,12 @@ public class HomeworkTests {
         else {
             System.out.println("\ncorrect password was found:" + current_password);
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource (strings = {"1234567890123456", "123456789012345", "1234567890", ""})
+    public void testShortString(String string){
+        assertTrue(string.length() > 15, "String length is equal or less than 15 symbols");
 
     }
 }
