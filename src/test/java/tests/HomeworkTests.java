@@ -257,15 +257,22 @@ public class HomeworkTests {
 
     @Test
     public void checkResponseHeaders(){
+        String exp_name = "x-secret-homework-header";
+        String exp_value = "Some secret value";
+
         Response response = RestAssured
                 .get("https://playground.learnqa.ru/api/homework_header")
                 .andReturn();
+        response.prettyPrint();
         //получаем хэдеры
         Headers headers = response.getHeaders();
         //проверяем, что в ответе есть хоть какие-то хэдеры
         assertTrue(headers.exist(), "There is no headers");
-        //печатаем название и значение хэдеров при помощи заведомо фейлящегося ассерта
-        assertEquals(0, headers, "\nheaders content:\n" + headers);
+        //проверяем, что в ответе есть нужный хэдер
+        assertTrue(headers.hasHeaderWithName(exp_name), "response has no header '" + exp_name + "'");
+        //проверяем, что у нужного хэдера правильное значение
+        String value = headers.getValue(exp_name);
+        assertEquals(exp_value, value, "header '" + exp_name + "' has wrong value: " + value);
     }
 
     @ParameterizedTest
