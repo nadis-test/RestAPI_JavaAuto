@@ -212,7 +212,7 @@ public class HomeworkTests {
     }
 
     @Test
-    public void checkResponseCookie(){
+    public void printCookiesNamesAndValues(){
         Response response = RestAssured
                 .get("https://playground.learnqa.ru/api/homework_cookie")
                 .andReturn();
@@ -233,12 +233,12 @@ public class HomeworkTests {
         while (itr.hasNext()){
             String cookie_name = itr.next().toString();
             String cookie_value = cookies.get(cookie_name);
-
-            //печатаем название и значение кук при помощи заведомо фейлящегося ассерта
-            //но это же сработает только один проход в цикле
-            assertEquals(0, cookie_name , "cookie name: " + cookie_name + " and cookie value: " + cookie_value);
+            //печатаем название и значение
+            System.out.println("cookie: " + cookie_name + " = " + cookie_value);
         }
     }
+    
+
 
     @Test
     public void checkResponseHeaders(){
