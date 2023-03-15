@@ -130,13 +130,13 @@ public class HomeworkTests {
 
         Set<String> passwords = new HashSet<>();
 
-        String fileName = "/Users/n.porotkova/GitHub/RestAPI_JavaAuto/top_passwords_SplashData1.csv";
+        String fileName = "/Users/n.porotkova/GitHub/RestAPI_JavaAuto/top_passwords_SplashData.csv";
 
         Scanner sc = new Scanner(new File(fileName));
-        sc.useDelimiter(",");
+        sc.useDelimiter("\n");
         while (sc.hasNext())
             {
-                passwords.add(sc.next());
+                passwords.addAll(Arrays.asList(sc.next().split(",")));
             }
         sc.close();
 
