@@ -33,5 +33,9 @@ public class AssertionsCustom extends BaseTestcase {
     public  static void assertResponseTextEquals(Response response, String expectedResponseText){
         assertEquals(expectedResponseText, response.asString(), "unexpected JSon text");
     }
+
+    public static void assertJsonHasKey(Response response, String expectedFieldName) {
+        response.then().assertThat().body("$", hasKey(expectedFieldName));
+    }
 }
 
