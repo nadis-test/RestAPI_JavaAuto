@@ -25,5 +25,13 @@ public class AssertionsCustom extends BaseTestcase {
         assertEquals(expectedValue, parameter,
                 "json value '" + name + "' dosen't match with expected value '" + expectedValue + "'");
     }
+
+    public static void assertResponseCodeEquals(Response response, int expectedStatusCode){
+        assertEquals(expectedStatusCode, response.getStatusCode(), "unexpected response code");
+    }
+
+    public  static void assertResponseTextEquals(Response response, String expectedResponseText){
+        assertEquals(expectedResponseText, response.asString(), "unexpected JSon text");
+    }
 }
 
