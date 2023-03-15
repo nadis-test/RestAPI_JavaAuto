@@ -50,6 +50,6 @@ public class UserRegisterTest extends BaseTestcase {
                 .andReturn();
 
         assertResponseCodeEquals(responseCreateAuth, 200);
-        assertJsonHasKey(responseCreateAuth,"id");
+        assertJsonHasField(responseCreateAuth,"id");
     }
 }
