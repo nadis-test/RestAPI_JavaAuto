@@ -237,7 +237,22 @@ public class HomeworkTests {
             System.out.println("cookie: " + cookie_name + " = " + cookie_value);
         }
     }
-    
+
+    @Test
+    public void checkCookieName(){
+        String exp_name = "HomeWork";
+        String exp_value = "hw_value";
+
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .andReturn();
+
+        String value = response.getCookie(exp_name);
+
+        assertTrue(response.getCookies().containsKey(exp_name), "response has no cookie '" + exp_name + "'");
+        assertEquals(exp_value, value, "cookie '" + exp_name + "' has wrong value: " + value);
+    }
+
 
 
     @Test
