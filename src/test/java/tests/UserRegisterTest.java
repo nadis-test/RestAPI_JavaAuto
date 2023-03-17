@@ -9,19 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static lib.AssertionsCustom.*;
+import static lib.DataGenerator.getGenerationData;
 import static lib.DataGenerator.getRandomEmail;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRegisterTest extends BaseTestcase {
     @Test
     public void createUserWithExistingEmail(){
+
         String email = "vinkotov@example.com";
         Map<String, String> userData = new HashMap<>();
         userData.put("email", email);
-        userData.put("password", "123");
-        userData.put("username", "learnqa");
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
+        userData = getGenerationData(userData);
 
         Response responseCreateAuth = RestAssured
                 .given()
@@ -35,13 +34,7 @@ public class UserRegisterTest extends BaseTestcase {
 
     @Test
     public void createUserWithUniqueEmail(){
-        String email = getRandomEmail();
-        Map<String, String> userData = new HashMap<>();
-        userData.put("email", email);
-        userData.put("password", "123");
-        userData.put("username", "learnqa");
-        userData.put("firstName", "learnqa");
-        userData.put("lastName", "learnqa");
+        Map<String, String> userData = getGenerationData();
 
         Response responseCreateAuth = RestAssured
                 .given()

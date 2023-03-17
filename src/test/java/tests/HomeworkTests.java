@@ -298,9 +298,9 @@ public class HomeworkTests {
                 .get("https://playground.learnqa.ru/ajax/api/user_agent_check")
                 .andReturn();
 
-        AssertionsCustom.assertJsonStringByName(response, "platform", platform_expected);
-        AssertionsCustom.assertJsonStringByName(response, "browser", browser_expected);
-        AssertionsCustom.assertJsonStringByName(response, "device", device_expected);
+        AssertionsCustom.assertJsonByName(response, "platform", platform_expected);
+        AssertionsCustom.assertJsonByName(response, "browser", browser_expected);
+        AssertionsCustom.assertJsonByName(response, "device", device_expected);
     }
 }
 

@@ -2,8 +2,6 @@ package lib;
 
 import io.restassured.response.Response;
 
-import java.util.List;
-
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +16,7 @@ public class AssertionsCustom extends BaseTestcase {
                 "json value '" + name + "' dosen't match with expected value '" + expectedValue + "'");
     }
 
-    public static void assertJsonStringByName(Response response, String name, String expectedValue) {
+    public static void assertJsonByName(Response response, String name, String expectedValue) {
         //в метод assertJsonByName передаем некоторый ответ запроса,
         // название поля "name"
         // некотрое эталонное значение expectedValue
