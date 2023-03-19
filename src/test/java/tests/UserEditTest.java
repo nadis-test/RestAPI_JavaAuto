@@ -35,7 +35,7 @@ public class UserEditTest extends BaseTestcase {
                 .body(authData)
                 .post("https://playground.learnqa.ru/api/user/login")
                 .andReturn();
-        
+
         //EDIT first name
         String newName = "changedName";
         Map<String, String> editData = new HashMap<>();
