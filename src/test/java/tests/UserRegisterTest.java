@@ -13,7 +13,12 @@ import static lib.DataGenerator.getGenerationData;
 import static lib.DataGenerator.getRandomEmail;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import lib.ApiCoreRequests;
+
 public class UserRegisterTest extends BaseTestcase {
+
+    private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
+
     @Test
     public void createUserWithExistingEmail(){
 
@@ -22,11 +27,8 @@ public class UserRegisterTest extends BaseTestcase {
         userData.put("email", email);
         userData = getGenerationData(userData);
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
 
         assertResponseCodeEquals(responseCreateAuth, 400);
         assertResponseTextEquals(responseCreateAuth, "Users with email '"+email+"' already exists");
@@ -36,13 +38,12 @@ public class UserRegisterTest extends BaseTestcase {
     public void createUserWithUniqueEmail(){
         Map<String, String> userData = getGenerationData();
 
-        Response responseCreateAuth = RestAssured
-                .given()
-                .body(userData)
-                .post("https://playground.learnqa.ru/api/user/")
-                .andReturn();
+        Response responseCreateAuth = apiCoreRequests
+                .makePostRequest("https://playground.learnqa.ru/api/user/", userData);
 
         assertResponseCodeEquals(responseCreateAuth, 200);
         assertJsonHasField(responseCreateAuth,"id");
     }
+
+
 }
