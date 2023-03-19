@@ -10,6 +10,19 @@ public class DataGenerator {
         return "learnqa" + timestamp + "@example.com";
     }
 
+    public static String getRandomUsername(int length){
+        // choose a Character random from this String
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "abcdefghijklmnopqrstuvxyz";
+        StringBuilder sb = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int index = (int)(characters.length() * Math.random());
+            sb.append(characters.charAt(index));
+        }
+        return sb.toString();
+    }
+
     public static Map<String, String> getGenerationData(){
         Map<String, String> userData = new HashMap<>();
         userData.put("email", getRandomEmail());
