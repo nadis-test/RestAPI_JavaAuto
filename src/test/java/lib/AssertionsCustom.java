@@ -2,9 +2,11 @@ package lib;
 
 import io.restassured.response.Response;
 
+import java.util.Map;
+
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.not;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AssertionsCustom extends BaseTestcase {
     public static void assertJsonByName(Response response, String name, int expectedValue) {
@@ -31,6 +33,10 @@ public class AssertionsCustom extends BaseTestcase {
         assertEquals(expectedStatusCode, response.getStatusCode(), "unexpected response code");
     }
 
+    public static void assertResponseCodeNotEquals(Response response, int expectedStatusCode){
+        assertNotEquals(expectedStatusCode, response.getStatusCode(), "unexpected response code");
+    }
+
     public  static void assertResponseTextEquals(Response response, String expectedResponseText){
         assertEquals(expectedResponseText, response.asString(), "unexpected JSon text");
     }
@@ -48,5 +54,8 @@ public class AssertionsCustom extends BaseTestcase {
     public static void assertJsonHasNotField(Response response, String unexpectedFieldName) {
         response.then().assertThat().body("$", not(hasKey(unexpectedFieldName)));
     }
-}
 
+    public static void assertJsonValues(Response response, Response expectedResponse) {
+        assertTrue(response.body().asString().equals(expectedResponse.body().asString()), "Json values doesn't match with expected");
+    }
+}

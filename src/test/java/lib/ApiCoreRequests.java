@@ -56,12 +56,21 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
-    @Step("Make a PUT request")
+    @Step("Make a PUT request with auth-token and auth-cookie")
     public Response makePutRequestWithTokenAndCookie(String url, Map<String, String> userData, String token, String cookie){
         return given()
                 .filter(new AllureRestAssured())
                 .header("x-csrf-token", token)
                 .cookie("auth_sid", cookie)
+                .body(userData)
+                .put(url)
+                .andReturn();
+    }
+
+    @Step("Make a PUT request without auth-token and auth-cookie")
+    public Response makePutRequest(String url, Map<String, String> userData){
+        return given()
+                .filter(new AllureRestAssured())
                 .body(userData)
                 .put(url)
                 .andReturn();
