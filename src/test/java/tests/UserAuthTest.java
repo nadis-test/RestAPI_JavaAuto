@@ -1,8 +1,6 @@
 package tests;
 
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import lib.BaseTestcase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +53,7 @@ public class UserAuthTest extends BaseTestcase {
         // значения для куки и хэдера мы получили в методе loginUser
 
         Response responseCheckAuth = apiCoreRequests
-                .makeGetRequest("https://playground.learnqa.ru/api/user/auth", this.header, this.cookie);
+                .makeGetRequestWithTokenAndCookie("https://playground.learnqa.ru/api/user/auth", this.header, this.cookie);
 
         //сравниваем id при проверке и при авторизации, если они равны - то юзер авторизован
         //используя наш собственный класс Assertions
