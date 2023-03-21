@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.hasValue;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,6 +57,8 @@ public class AssertionsCustom extends BaseTestcase {
     }
 
     public static void assertJsonValues(Response response, Response expectedResponse) {
-        assertTrue(response.body().asString().equals(expectedResponse.body().asString()), "Json values doesn't match with expected");
+        //assertTrue(response.body().asString().equals(expectedResponse.body().asString()), "Json values doesn't match with expected");
+        assertEquals(expectedResponse.body().asString(), response.body().asString(), "Json values doesn't match with expected");
     }
+
 }
