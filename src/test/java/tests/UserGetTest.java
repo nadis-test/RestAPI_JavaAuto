@@ -70,7 +70,7 @@ public class UserGetTest extends BaseTestcase {
 
         String cookie = this.getCookie(responseGetAuth, "auth_sid"); // вызываем getCookie из lib/BaseTestcase
         String header = this.getHeader(responseGetAuth,"x-csrf-token"); // вызываем getHeader из lib/BaseTestcase
-        
+
         //создаем нового пользователя, чтобы получить существующий id
         userData = getGenerationData();
         Response responseCreateNewAuth = apiCoreRequests
