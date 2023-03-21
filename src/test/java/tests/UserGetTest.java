@@ -58,8 +58,8 @@ public class UserGetTest extends BaseTestcase {
     }
 
     @Test
-    @Description("This test tries to get user data without necessary parameters: token and auth-cookie")
-    @DisplayName("Test negative: get user data without token and auth-cookie")
+    @Description("This test tries to get user data using other user id")
+    @DisplayName("Test negative: get user data using other user id")
     public void testGetUserDataWithOtherUserId() {
         //авторизуемся существующем пользователем и получаем токен и куку
         Map<String, String> userData = new HashMap<>();
