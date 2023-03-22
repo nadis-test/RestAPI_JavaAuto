@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.BaseTestcase;
@@ -24,6 +22,9 @@ public class UserDeleteTest extends BaseTestcase {
     @Test
     @Description("This test tries to delete protected user")
     @DisplayName("Test negative: delete protected user")
+    @Stories({@Story("Negative"), @Story("Acceptance")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-103")
     public void deleteProtectedUser() {
         //LOGIN protected user and save his data
         Map<String, String> userData = new HashMap<>();
@@ -57,6 +58,9 @@ public class UserDeleteTest extends BaseTestcase {
     @Test
     @Description("This test deletes user")
     @DisplayName("Test positive: delete just created user")
+    @Stories({@Story("Positive"), @Story("Acceptance")})
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "CASE-102")
     public void deleteJustCreatedUser() {
         //CREATE user
         Map<String, String> userData = getGenerationData();
@@ -92,7 +96,11 @@ public class UserDeleteTest extends BaseTestcase {
     @Test
     @Description("This test tries to delete user using other user auth data")
     @DisplayName("Test negative: delete user using other user auth data")
-    public void editOtherUserData(){
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-101")
+    @Issue(value = "ISSUE-001")
+    public void deleteOtherUserData(){
         //GENERATE first user
         Map<String, String> userData = getGenerationData();
         Response responseCreateAuthFirst = apiCoreRequests.makePostRequest(

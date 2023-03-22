@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.BaseTestcase;
@@ -32,6 +30,9 @@ public class UserRegisterTest extends BaseTestcase {
     @Test
     @Description("This test creates user with existing email")
     @DisplayName("Test negative: create user with existing email")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-201")
     public void createUserWithExistingEmail(){
 
         String email = "vinkotov@example.com";
@@ -49,6 +50,9 @@ public class UserRegisterTest extends BaseTestcase {
     @Test
     @Description("This test creates user with unique email")
     @DisplayName("Test positive: create user with unique email")
+    @Stories({@Story("Positive"), @Story("Acceptance")})
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "CASE-202")
     public void createUserWithUniqueEmail(){
         Map<String, String> userData = getGenerationData();
 
@@ -62,6 +66,9 @@ public class UserRegisterTest extends BaseTestcase {
     @Test
     @Description("This test creates user with wrong email format: no '@' symbol")
     @DisplayName("Test negative: create user with wrong email format")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-203")
     public void createUserWithIncorrectEmailFormat(){
         String email = "testexample.com";
         Map<String, String> userData = new HashMap<>();
@@ -78,8 +85,11 @@ public class UserRegisterTest extends BaseTestcase {
     @ParameterizedTest
     @Description("This test creates user with missing registration data")
     @DisplayName("Test negative: create user with missing registration data")
-    @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-204")
 
+    @ValueSource(strings = {"email", "password", "username", "firstName", "lastName"})
     public void createUserWithMissingUserDataValue(String userDataField){
 
         Map<String, String> userData = getGenerationData();
@@ -95,6 +105,9 @@ public class UserRegisterTest extends BaseTestcase {
     @Test
     @Description("This test creates user with wrong format username: only one symbol short")
     @DisplayName("Test negative: create user with too short username")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-205")
     public void createUserWithTooShortUsername(){
         String username = getRandomUsername(1);
         Map<String, String> userData = new HashMap<>();
@@ -111,6 +124,9 @@ public class UserRegisterTest extends BaseTestcase {
     @Test
     @Description("This test creates user with wrong format username: more 250 symbols")
     @DisplayName("Test negative: create user with too long username")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-207")
     public void createUserWithTooLongUsername(){
         String username = getRandomUsername(251);
         Map<String, String> userData = new HashMap<>();

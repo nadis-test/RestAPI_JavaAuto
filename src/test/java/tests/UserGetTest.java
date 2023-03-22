@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
@@ -24,6 +22,9 @@ public class UserGetTest extends BaseTestcase {
     @Test
     @Description("This test tries to get user data without necessary parameters: token and auth-cookie")
     @DisplayName("Test negative: get user data without token and auth-cookie")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-401")
     public void testGetUserDataNotAuth() {
         Response responseUserData = apiCoreRequests.makeGetRequest("https://playground.learnqa.ru/api/user/2");
 
@@ -36,6 +37,9 @@ public class UserGetTest extends BaseTestcase {
     @Test
     @Description("This test gets user data")
     @DisplayName("Test positive: get user data")
+    @Stories({@Story("Positive"), @Story("Acceptance")})
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "CASE-402")
     public void testGetUserDetailsAuthAsSameUser(){
         Map<String, String> userData = new HashMap<>();
         userData.put("email", "vinkotov@example.com");
@@ -60,6 +64,9 @@ public class UserGetTest extends BaseTestcase {
     @Test
     @Description("This test tries to get user data using other user id")
     @DisplayName("Test negative: get user data using other user id")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-403")
     public void testGetUserDataWithOtherUserId() {
         //авторизуемся существующем пользователем и получаем токен и куку
         Map<String, String> userData = new HashMap<>();

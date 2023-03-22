@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.BaseTestcase;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 
 import lib.AssertionsCustom;
@@ -46,6 +44,9 @@ public class UserAuthTest extends BaseTestcase {
     @Test
     @Description("This test successfully authorise user by email and password")
     @DisplayName("Test positive auth user")
+    @Stories({@Story("Positive"), @Story("Acceptance")})
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "CASE-501")
     public void testAuthUser(){
 
         // выполняем запрос на проверку того, авторизован ли пользователь
@@ -64,6 +65,10 @@ public class UserAuthTest extends BaseTestcase {
 
     @Description("This test check auth without sending cookie and header")
     @DisplayName("Test negative auth user")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-502")
+
     @ParameterizedTest
     @ValueSource(strings = {"cookie", "headers"})
     public void testNegativeAuthUser(String condition){

@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.BaseTestcase;
@@ -24,6 +22,9 @@ public class UserEditTest extends BaseTestcase {
     @Test
     @Description("This test edit user data just after creation")
     @DisplayName("Test positive: edit user data just after creation")
+    @Stories({@Story("Positive"), @Story("Acceptance")})
+    @Severity(SeverityLevel.BLOCKER)
+    @TmsLink(value = "CASE-301")
     public void editJustCreatedTest(){
         //GENERATE user
         Map<String, String> userData = getGenerationData();
@@ -58,6 +59,9 @@ public class UserEditTest extends BaseTestcase {
     @Test
     @Description("This test tries to edit non-authorised user data")
     @DisplayName("Test negative: edit non-authorised user data")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-302")
     public void editNonAuthUser(){
         //GENERATE user
         Map<String, String> userData = getGenerationData();
@@ -80,6 +84,10 @@ public class UserEditTest extends BaseTestcase {
     @Test
     @Description("This test tries to edit user data using other user auth data")
     @DisplayName("Test negative: edit user data using other user auth data")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.CRITICAL)
+    @TmsLink(value = "CASE-303")
+    @Issue(value = "ISSUE-002")
     public void editOtherUserData(){
         //GENERATE first user
         Map<String, String> userData = getGenerationData();
@@ -144,6 +152,9 @@ public class UserEditTest extends BaseTestcase {
     @Test
     @Description("This test tries to change user email to incorrect email withoou '@' symbol")
     @DisplayName("Test negative: change user email to incorrect data")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-304")
     public void editUserEmailToIncorrectData(){
         //GENERATE user
         Map<String, String> userData = getGenerationData();
@@ -181,6 +192,9 @@ public class UserEditTest extends BaseTestcase {
     @Test
     @Description("This test tries to edit user name, replacing it by one symbol ")
     @DisplayName("Test negative: replace username by too short value")
+    @Stories({@Story("Negative"), @Story("Regression")})
+    @Severity(SeverityLevel.NORMAL)
+    @TmsLink(value = "CASE-305")
     public void editUsernameToIncorrectShortValue(){
         //GENERATE user
         Map<String, String> userData = getGenerationData();
